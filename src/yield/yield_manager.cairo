@@ -1,47 +1,48 @@
-# SPDX-License-Identifier: MIT
-# Carbonable smart contracts written in Cairo v0.1.0 (yield_manager.cairo)
+// SPDX-License-Identifier: MIT
 
 %lang starknet
 
+// Starkware dependencies
 from starkware.cairo.common.cairo_builtins import HashBuiltin
+
+// Local dependencies
 from src.yield.library import YieldManager
 
-# -----
-# VIEWS
-# -----
-
-@view
-func project_nft_address{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (
-    project_nft_address : felt
-):
-    return YieldManager.project_nft_address()
-end
-
-@view
-func reward_token_address{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (
-    reward_token_address : felt
-):
-    return YieldManager.reward_token_address()
-end
-
-@view
-func carbonable_token_address{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    ) -> (carbonable_token_address : felt):
-    return YieldManager.carbonable_token_address()
-end
-
-# ------
-# CONSTRUCTOR
-# ------
+//
+// Constructor
+//
 
 @constructor
-func constructor{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    owner : felt,
-    project_nft_address : felt,
-    carbonable_token_address : felt,
-    reward_token_address : felt,
-):
+func constructor{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    owner: felt,
+    carbonable_project_address: felt,
+    carbonable_token_address: felt,
+    reward_token_address: felt,
+) {
     return YieldManager.constructor(
-        owner, project_nft_address, carbonable_token_address, reward_token_address
-    )
-end
+        owner, carbonable_project_address, carbonable_token_address, reward_token_address
+    );
+}
+
+//
+// Getters
+//
+
+@view
+func carbonable_project_address{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    ) -> (carbonable_project_address: felt) {
+    return YieldManager.carbonable_project_address();
+}
+
+@view
+func reward_token_address{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() -> (
+    reward_token_address: felt
+) {
+    return YieldManager.reward_token_address();
+}
+
+@view
+func carbonable_token_address{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    ) -> (carbonable_token_address: felt) {
+    return YieldManager.carbonable_token_address();
+}

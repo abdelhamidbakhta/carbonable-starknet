@@ -1,188 +1,190 @@
-# SPDX-License-Identifier: MIT
-# Carbonable smart contracts written in Cairo v0.1.0 (minter.cairo)
+// SPDX-License-Identifier: MIT
 
 %lang starknet
 
+// Starkware dependencies
 from starkware.cairo.common.cairo_builtins import HashBuiltin
 from starkware.cairo.common.uint256 import Uint256
+
+// Local dependencies
 from src.mint.library import CarbonableMinter
 
-# -----
-# VIEWS
-# -----
-
-@view
-func project_nft_address{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (
-    project_nft_address : felt
-):
-    return CarbonableMinter.project_nft_address()
-end
-
-@view
-func payment_token_address{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (
-    payment_token_address : felt
-):
-    return CarbonableMinter.payment_token_address()
-end
-
-@view
-func whitelisted_sale_open{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (
-    whitelisted_sale_open : felt
-):
-    return CarbonableMinter.whitelisted_sale_open()
-end
-
-@view
-func public_sale_open{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (
-    public_sale_open : felt
-):
-    return CarbonableMinter.public_sale_open()
-end
-
-@view
-func max_buy_per_tx{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (
-    max_buy_per_tx : felt
-):
-    return CarbonableMinter.max_buy_per_tx()
-end
-
-@view
-func unit_price{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (
-    unit_price : Uint256
-):
-    return CarbonableMinter.unit_price()
-end
-
-@view
-func reserved_supply_for_mint{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    ) -> (reserved_supply_for_mint : Uint256):
-    return CarbonableMinter.reserved_supply_for_mint()
-end
-
-@view
-func max_supply_for_mint{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (
-    max_supply_for_mint : Uint256
-):
-    return CarbonableMinter.max_supply_for_mint()
-end
-
-@view
-func whitelist_merkle_root{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (
-    whitelist_merkle_root : felt
-):
-    return CarbonableMinter.whitelist_merkle_root()
-end
-
-@view
-func whitelisted_slots{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    account : felt, slots : felt, proof_len : felt, proof : felt*
-) -> (slots : felt):
-    return CarbonableMinter.whitelisted_slots(account, slots, proof_len, proof)
-end
-
-@view
-func claimed_slots{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    account : felt
-) -> (slots : felt):
-    return CarbonableMinter.claimed_slots(account)
-end
-# ------
-# CONSTRUCTOR
-# ------
+//
+// Constructor
+//
 
 @constructor
-func constructor{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    owner : felt,
-    project_nft_address : felt,
-    payment_token_address : felt,
-    public_sale_open : felt,
-    max_buy_per_tx : felt,
-    unit_price : Uint256,
-    max_supply_for_mint : Uint256,
-    reserved_supply_for_mint : Uint256,
-):
+func constructor{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    owner: felt,
+    carbonable_project_address: felt,
+    payment_token_address: felt,
+    public_sale_open: felt,
+    max_buy_per_tx: felt,
+    unit_price: Uint256,
+    max_supply_for_mint: Uint256,
+    reserved_supply_for_mint: Uint256,
+) {
     return CarbonableMinter.constructor(
         owner,
-        project_nft_address,
+        carbonable_project_address,
         payment_token_address,
         public_sale_open,
         max_buy_per_tx,
         unit_price,
         max_supply_for_mint,
         reserved_supply_for_mint,
-    )
-end
+    );
+}
 
-# ------------------
-# EXTERNAL FUNCTIONS
-# ------------------
+//
+// Getters
+//
+
+@view
+func carbonable_project_address{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    ) -> (carbonable_project_address: felt) {
+    return CarbonableMinter.carbonable_project_address();
+}
+
+@view
+func payment_token_address{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() -> (
+    payment_token_address: felt
+) {
+    return CarbonableMinter.payment_token_address();
+}
+
+@view
+func whitelisted_sale_open{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() -> (
+    whitelisted_sale_open: felt
+) {
+    return CarbonableMinter.whitelisted_sale_open();
+}
+
+@view
+func public_sale_open{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() -> (
+    public_sale_open: felt
+) {
+    return CarbonableMinter.public_sale_open();
+}
+
+@view
+func max_buy_per_tx{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() -> (
+    max_buy_per_tx: felt
+) {
+    return CarbonableMinter.max_buy_per_tx();
+}
+
+@view
+func unit_price{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() -> (
+    unit_price: Uint256
+) {
+    return CarbonableMinter.unit_price();
+}
+
+@view
+func reserved_supply_for_mint{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    ) -> (reserved_supply_for_mint: Uint256) {
+    return CarbonableMinter.reserved_supply_for_mint();
+}
+
+@view
+func max_supply_for_mint{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() -> (
+    max_supply_for_mint: Uint256
+) {
+    return CarbonableMinter.max_supply_for_mint();
+}
+
+@view
+func whitelist_merkle_root{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() -> (
+    whitelist_merkle_root: felt
+) {
+    return CarbonableMinter.whitelist_merkle_root();
+}
+
+@view
+func whitelisted_slots{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    account: felt, slots: felt, proof_len: felt, proof: felt*
+) -> (slots: felt) {
+    return CarbonableMinter.whitelisted_slots(account, slots, proof_len, proof);
+}
+
+@view
+func claimed_slots{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    account: felt
+) -> (slots: felt) {
+    return CarbonableMinter.claimed_slots(account);
+}
+
+//
+// Externals
+//
 
 @external
-func set_whitelist_merkle_root{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    whitelist_merkle_root : felt
-):
-    return CarbonableMinter.set_whitelist_merkle_root(whitelist_merkle_root)
-end
+func set_whitelist_merkle_root{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    whitelist_merkle_root: felt
+) {
+    return CarbonableMinter.set_whitelist_merkle_root(whitelist_merkle_root);
+}
 
 @external
-func set_public_sale_open{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    public_sale_open : felt
-):
-    return CarbonableMinter.set_public_sale_open(public_sale_open)
-end
+func set_public_sale_open{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    public_sale_open: felt
+) {
+    return CarbonableMinter.set_public_sale_open(public_sale_open);
+}
 
 @external
-func set_max_buy_per_tx{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    max_buy_per_tx : felt
-):
-    return CarbonableMinter.set_max_buy_per_tx(max_buy_per_tx)
-end
+func set_max_buy_per_tx{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    max_buy_per_tx: felt
+) {
+    return CarbonableMinter.set_max_buy_per_tx(max_buy_per_tx);
+}
 
 @external
-func set_unit_price{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    unit_price : Uint256
-):
-    return CarbonableMinter.set_unit_price(unit_price)
-end
+func set_unit_price{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    unit_price: Uint256
+) {
+    return CarbonableMinter.set_unit_price(unit_price);
+}
 
 @external
 func decrease_reserved_supply_for_mint{
-    syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr
-}(slots : Uint256):
-    return CarbonableMinter.decrease_reserved_supply_for_mint(slots)
-end
+    syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr
+}(slots: Uint256) {
+    return CarbonableMinter.decrease_reserved_supply_for_mint(slots);
+}
 
 @external
-func airdrop{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    to : felt, quantity : felt
-) -> (success : felt):
-    return CarbonableMinter.airdrop(to, quantity)
-end
+func airdrop{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    to: felt, quantity: felt
+) -> (success: felt) {
+    return CarbonableMinter.airdrop(to, quantity);
+}
 
 @external
-func withdraw{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (
-    success : felt
-):
-    return CarbonableMinter.withdraw()
-end
+func withdraw{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() -> (
+    success: felt
+) {
+    return CarbonableMinter.withdraw();
+}
 
 @external
-func transfer{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    token_address : felt, recipient : felt, amount : Uint256
-) -> (success : felt):
-    return CarbonableMinter.transfer(token_address, recipient, amount)
-end
+func transfer{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    token_address: felt, recipient: felt, amount: Uint256
+) -> (success: felt) {
+    return CarbonableMinter.transfer(token_address, recipient, amount);
+}
 
 @external
-func whitelist_buy{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    slots : felt, proof_len : felt, proof : felt*, quantity : felt
-) -> (success : felt):
-    return CarbonableMinter.whitelist_buy(slots, proof_len, proof, quantity)
-end
+func whitelist_buy{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    slots: felt, proof_len: felt, proof: felt*, quantity: felt
+) -> (success: felt) {
+    return CarbonableMinter.whitelist_buy(slots, proof_len, proof, quantity);
+}
 
 @external
-func public_buy{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-    quantity : felt
-) -> (success : felt):
-    return CarbonableMinter.public_buy(quantity)
-end
+func public_buy{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
+    quantity: felt
+) -> (success: felt) {
+    return CarbonableMinter.public_buy(quantity);
+}

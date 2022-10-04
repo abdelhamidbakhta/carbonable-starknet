@@ -1,15 +1,24 @@
 ["protostar.config"]
-protostar_version = "0.3.1"
+protostar_version = "0.4.2"
 
 ["protostar.project"]
 libs_path = "lib"
 
 ["protostar.shared_command_configs"]
-cairo_path = ["./lib/cairo_contracts/src", "src"]
+cairo_path = [
+    "./lib/cairopen_contracts/src",
+    "./lib/cairo_contracts/src",
+    "./lib/bal7hazar_contracts/src",
+    "src"
+]
 
 ["protostar.contracts"]
-CarbonableProjectNFT = [
-    "./src/nft/project/CarbonableProjectNFT.cairo",
+CarbonableBadge = [
+    "./src/badge/badge.cairo",
+]
+
+CarbonableProject = [
+    "./src/project/project.cairo",
 ]
 
 CarbonableMinter = [
@@ -28,7 +37,7 @@ target = ["tests"]
 gateway_url="http://127.0.0.1:5050/"
 
 [profile.testnet.protostar.deploy]
-network="alpha-goerli"
+network="testnet"
 
 [profile.mainnet.protostar.deploy]
-network="alpha-mainnet"
+network="mainnet"
